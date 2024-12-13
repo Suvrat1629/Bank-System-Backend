@@ -25,6 +25,11 @@ public class Account {
     @NotNull(message = "Customer association is mandatory")
     private Customer customer;
 
+    @Column(nullable = false)
+    private boolean blocked = false;
+
+    private BigDecimal interestRate;
+
     // Getters and setters
     public Long getId() {
         return id;
@@ -56,5 +61,21 @@ public class Account {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(BigDecimal interestRate) {
+        this.interestRate = interestRate;
     }
 }
