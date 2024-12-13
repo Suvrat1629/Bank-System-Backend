@@ -6,7 +6,7 @@ import com.example.Bank_System.response.TransactionResponse;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface AdminService {
+public interface AdminTransactionService {
     String blockAccount(Long accountId);
     List<TransactionResponse> monitorTransactions(BigDecimal threshold);
 //    String approveAccountCreation(Long accountId);

@@ -3,7 +3,7 @@ package com.example.Bank_System.controller;
 import com.example.Bank_System.request.AccountRequest;
 import com.example.Bank_System.request.ManageInterestRequest;
 import com.example.Bank_System.response.TransactionResponse;
-import com.example.Bank_System.service.AdminService;
+import com.example.Bank_System.service.AdminTransactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +14,9 @@ import java.util.List;
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    private final AdminService adminService;
+    private final AdminTransactionService adminService;
 
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminTransactionService adminService) {
         this.adminService = adminService;
     }
 

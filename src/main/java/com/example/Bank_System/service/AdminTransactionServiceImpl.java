@@ -7,7 +7,6 @@ import com.example.Bank_System.model.Complaint;
 import com.example.Bank_System.repository.AccountRepository;
 import com.example.Bank_System.repository.TransactionRepository;
 import com.example.Bank_System.repository.ComplaintRepository;
-import com.example.Bank_System.service.AdminService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,14 +14,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminTransactionServiceImpl implements AdminTransactionService {
 
 
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
     private final ComplaintRepository complaintRepository;
 
-    public AdminServiceImpl(AccountRepository accountRepository, TransactionRepository transactionRepository, ComplaintRepository complaintRepository) {
+    public AdminTransactionServiceImpl(AccountRepository accountRepository, TransactionRepository transactionRepository, ComplaintRepository complaintRepository) {
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
         this.complaintRepository = complaintRepository;
