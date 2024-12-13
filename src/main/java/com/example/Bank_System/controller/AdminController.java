@@ -1,52 +1,45 @@
 package com.example.Bank_System.controller;
 
-import com.example.Bank_System.request.AccountRequest;
-import com.example.Bank_System.request.ManageInterestRequest;
-import com.example.Bank_System.response.TransactionResponse;
-import com.example.Bank_System.service.AdminTransactionService;
+import com.example.Bank_System.model.Admin;
+import com.example.Bank_System.request.AdminRequest;
+import com.example.Bank_System.response.AdminResponse;
+import com.example.Bank_System.service.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    private final AdminTransactionService adminService;
+    private final AdminService adminService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public AdminController(AdminTransactionService adminService) {
+    @Autowired
+    public AdminController(AdminService adminService, BCryptPasswordEncoder passwordEncoder) {
         this.adminService = adminService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/block-account")
-    public ResponseEntity<String> blockAccount(@RequestBody AccountRequest accountRequest) {
-        String message = adminService.blockAccount(accountRequest.getCustomerId());
-        return ResponseEntity.ok(message);
+    // Create Admin
+    @PostMapping("/registerAdmin")
+    public ResponseEntity<AdminResponse> createAdmin(@RequestBody AdminRequest adminRequest) {
+        AdminResponse createdAdmin = adminService.createAdmin(adminRequest);
+        return ResponseEntity.ok(createdAdmin);
     }
 
-    @GetMapping("/monitor-transactions")
-    public ResponseEntity<List<TransactionResponse>> monitorTransactions(@RequestBody BigDecimal threshold) {
-        List<TransactionResponse> transactions = adminService.monitorTransactions(threshold);
-        return ResponseEntity.ok(transactions);
+    // Get All Admins
+    @GetMapping
+    public ResponseEntity<List<AdminResponse>> getAllAdmins() {
+        return ResponseEntity.ok(adminService.getAllAdmins());
     }
 
-//    @PostMapping("/approve-account")
-//    public ResponseEntity<String> approveAccountCreation(@RequestParam Long accountId) {
-//        String message = adminService.approveAccountCreation(accountId);
-//        return ResponseEntity.ok(message);
-//    }
-
-    @PostMapping("/manage-interest")
-    public ResponseEntity<String> manageInterestRates(@RequestBody ManageInterestRequest request) {
-        String message = adminService.manageInterestRates(request.getAccountType(), request.getNewRate());
-        return ResponseEntity.ok(message);
+    // Get Admin by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<AdminResponse> getAdminById(@PathVariable Long id) {
+        return ResponseEntity.ok(adminService.getAdminById(id));
     }
-
-//    @GetMapping("/view-complaints")
-//    public ResponseEntity<List<Complaint>> viewCustomerComplaints() {
-//        List<Complaint> complaints = adminService.viewCustomerComplaints();
-//        return ResponseEntity.ok(complaints);
-//    }
 }

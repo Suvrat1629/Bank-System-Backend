@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @Service
 public class AdminTransactionServiceImpl implements AdminTransactionService {
 
-
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
     private final ComplaintRepository complaintRepository;
