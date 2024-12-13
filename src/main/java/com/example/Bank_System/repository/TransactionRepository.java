@@ -14,7 +14,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     List<Transaction> findTop10ByAccountIdOrderByTimestampDesc(Long accountId);
 
-    @Query("SELECT new com.example.Bank_System.response.TransactionResponse(t.id, t.accountId, t.amount, t.timestamp) FROM Transaction t WHERE t.amount > :threshold")
+    @Query("SELECT new com.example.Bank_System.response.TransactionResponse(t.id, t.amount, t.timestamp) " +
+            "FROM Transaction t WHERE t.amount > :threshold")
     List<TransactionResponse> findTransactionsAboveThreshold(BigDecimal threshold);
 
     List<Transaction> findByAmountGreaterThan(BigDecimal thresholdAmount);

@@ -11,6 +11,24 @@ public class TransactionResponse {
     private LocalDateTime timestamp;
     private String description;
 
+    public TransactionResponse(){
+
+    }
+
+    public TransactionResponse(Long id, BigDecimal amount, LocalDateTime timestamp) {
+        this.id = id;
+        this.amount = amount;
+        this.timestamp = timestamp;
+    }
+
+    public TransactionResponse(Long id, BigDecimal amount, String type, LocalDateTime timestamp, String description) {
+        this.id = id;
+        this.amount = amount;
+        this.type = type;
+        this.timestamp = timestamp;
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }
@@ -51,11 +69,5 @@ public class TransactionResponse {
         this.description = description;
     }
 
-    public TransactionResponse(Long id, BigDecimal amount, String type, LocalDateTime timestamp, String description) {
-        this.id = id;
-        this.amount = amount;
-        this.type = type;
-        this.timestamp = timestamp;
-        this.description = description;
-    }
+
 }
