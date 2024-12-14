@@ -8,6 +8,7 @@ import com.example.Bank_System.repository.CardRepository;
 import com.example.Bank_System.request.CardRequest;
 import com.example.Bank_System.request.TransactionRequest;
 import org.hibernate.service.spi.ServiceException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,9 +22,12 @@ public class CardServiceImpl implements CardService {
     private final CardRepository cardRepository;
     private final AccountRepository accountRepository;
 
-    public CardServiceImpl(CardRepository cardRepository, AccountRepository accountRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public CardServiceImpl(CardRepository cardRepository, AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.cardRepository = cardRepository;
         this.accountRepository = accountRepository;
+        this.passwordEncoder=passwordEncoder;
     }
 
     public String requestNewCard(Long accountId, String cardType, BigDecimal dailyLimit, String pin) {
@@ -36,7 +40,7 @@ public class CardServiceImpl implements CardService {
         card.setAccount(account); // Placeholder for Account reference
         card.setCardType(cardType);
         card.setDailyLimit(dailyLimit);
-        card.setPin(pin);
+        card.setPin(passwordEncoder.encode(pin));
         card.setCardNumber(generateCardNumber());
         card.setBlocked(false);
         card.setExpiryDate(generateExpiryDate()); // Set expiry date
@@ -135,10 +139,10 @@ public class CardServiceImpl implements CardService {
         if (isCardExpired(card)) {
             throw new IllegalArgumentException("Operation failed. The card has expired.");
         }
-        if (!card.getPin().equals(currentPin)) {
+        if (!passwordEncoder.matches(currentPin, card.getPin())) {
             throw new IllegalArgumentException("Invalid current PIN.");
         }
-        card.setPin(newPin);
+        card.setPin(passwordEncoder.encode(newPin));
         cardRepository.save(card);
         return "Card PIN has been updated successfully.";
     }
