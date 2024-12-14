@@ -31,9 +31,14 @@ public class Transaction {
     @JoinColumn(name = "target_account_id", nullable = true)
     private Account targetAccount; // For transfers
 
+    @ManyToOne
+    @JoinColumn(name = "card_id",referencedColumnName = "id", nullable = false)
+    private Card card;
+
     public Transaction(){
 
     }
+
 
     public Transaction(Long id, BigDecimal amount, String type, LocalDateTime timestamp, String description, Account account, Account targetAccount) {
         this.id = id;
@@ -99,6 +104,5 @@ public class Transaction {
     public void setTargetAccount(Account targetAccount) {
         this.targetAccount = targetAccount;
     }
-
 
 }

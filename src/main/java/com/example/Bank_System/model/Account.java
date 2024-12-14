@@ -14,11 +14,11 @@ public class Account {
 
     @NotBlank(message = "Account type cannot be blank")
     @Pattern(regexp = "Savings|Current|Fixed Deposit", message = "Account type must be Savings, Current, or Fixed Deposit")
-    private String accountType;
+    private String accountType="Savings";
 
     @NotNull(message = "Balance cannot be null")
     @DecimalMin(value = "0.0", inclusive = true, message = "Balance must be non-negative")
-    private BigDecimal balance;
+    private BigDecimal balance=BigDecimal.ZERO;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -27,8 +27,16 @@ public class Account {
 
     @Column(nullable = false)
     private boolean blocked = false;
+    
+    
 
     private BigDecimal interestRate;
+
+    public Account() {
+    }
+
+    public Account(Long accountId) {
+    }
 
     // Getters and setters
     public Long getId() {
